@@ -15,6 +15,7 @@ namespace cpt_header_image;
 
 add_action( 'after_setup_theme', __NAMESPACE__ . '\\after_setup_theme' );
 add_action( 'customize_register', __NAMESPACE__ . '\\customize_register' );
+add_filter( 'theme_mod_header_image', __NAMESPACE__ . '\\theme_mod_header_image' );
 
 function after_setup_theme(){
   if( !current_theme_supports( 'custom-header' ) ){
@@ -46,8 +47,8 @@ function customize_register( $wp_customize ){
 }
 
 function theme_mod_header_image( $url ){
-  if( is_post_type_archive( $post_types ) ){
-    $post_type = get_post_type();
+  $post_type = get_post_type();
+  if( is_post_type_archive( $post_type ) ){
     $post_id = get_theme_mod( 'header_image_' . $post_type );
     if( $post_id ){
       $url = wp_get_attachment_url( $post_id );
