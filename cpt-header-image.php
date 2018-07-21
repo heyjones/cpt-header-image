@@ -13,7 +13,14 @@ License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 
 namespace cpt_header_image;
 
+add_action( 'after_setup_theme', __NAMESPACE__ . '\\after_setup_theme' );
 add_action( 'customize_register', __NAMESPACE__ . '\\customize_register' );
+
+function after_setup_theme(){
+  if( !current_theme_supports( 'custom-header' ) ){
+    add_theme_support( 'custom-header' );
+  }
+}
 
 function customize_register( $wp_customize ){
   $post_types = get_post_types( array(
